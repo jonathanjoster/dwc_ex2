@@ -1,0 +1,10 @@
+<div class="color-green ml">
+  <%= flash[:success] %>
+</div>
+
+<p><span class="bold ml">Title:</span> <%= @book.title %></p>
+<p><span class="bold ml">Body:</span> <%= @book.body %></p>
+
+<%= link_to 'Edit', edit_book_path %>
+|
+<%= link_to 'Back', books_path %>

@@ -1,0 +1,41 @@
+<% is_title_blank = false %>
+<% is_body_blank = false %>
+
+<h2>Editing Book</h2>
+
+<% if @book.errors.any?  %>
+  <div class="error-container">
+    <h4>
+      <%= num_errors = @book.errors.full_messages.length %>
+      <%= num_errors >= 2 ? 'error'.pluralize : 'error' %>
+      prohibited this book from being saved:
+    </h4>
+    <ul>
+    <% @book.errors.full_messages.each do |message| %>
+      <% is_title_blank = true if message[0] == 'T' %>
+      <% is_body_blank = true if message[0] == 'B' %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with model: @book, url: book_path(@book.id), method: :patch do |f| %>
+  <div class=<%= is_title_blank ? 'red-container' : '' %>>
+    <span>Title</span>
+    <%= f.text_field :title %>
+  </div>
+  <br>
+
+  <div class=<%= is_body_blank ? 'red-container' : '' %>>
+    <p>Body</p>
+    <%= f.text_area :body %>
+  </div>
+  <br>
+
+  <%= f.submit 'Update Book' %>
+<% end %>
+
+<%= link_to 'Show', book_path(@book.id) %>
+|
+<%= link_to 'Back', books_path %>
